@@ -326,7 +326,7 @@ public class Main {
 	
 	public static void Recipe(Connection con,ArrayList<capaModelo.DetallePedidoPixel> pruebaPedido,int NumFactura){
 		try {
-			int j=1,ProdNum=0,InvenNum=0,idAdjustInventory=0;
+			int ProdNum=0,InvenNum=0,idAdjustInventory=0;
 			double Quan=0,CalcQuan=0,PosUsed=0,Units=0;
 			Timestamp ts = new Timestamp(System.currentTimeMillis());
 			PreparedStatement Receta = null,StockLevels=null,UpdateStock=null,AdjustInventory=null;
@@ -350,34 +350,14 @@ public class Main {
 					Receta.setInt(1, ProdNum);
 					rs = Receta.executeQuery();
 					while(rs.next()){
-//						System.out.print(j+" ");
-//						System.out.print(rs.getInt(1)+" ");
-//						System.out.print(rs.getInt(2)+" ");
-//						System.out.print(rs.getString(3)+" ");
-//						System.out.print(rs.getInt(4)+" ");
-//						System.out.print(rs.getString(5)+" ");
-//						System.out.print(rs.getDouble(6)+" ");
-//						System.out.print(rs.getString(7));
-//						System.out.println();
-						j++;
-						
 						InvenNum = rs.getInt(4);
 						CalcQuan = Quan*rs.getDouble(6);
-//						System.out.println("Invennum:"+InvenNum+" CalcQuan: "+CalcQuan);
 						StockLevels = con.prepareStatement(SqlStockLevels);
 						StockLevels.setInt(1, InvenNum);
 						rsStockLevels = StockLevels.executeQuery();
 						while (rsStockLevels.next()) {
-//							System.out.print(rsStockLevels.getInt(1)+" ");
-//							System.out.print(rsStockLevels.getDouble(2)+" ");
-//							System.out.print(rsStockLevels.getDouble(3)+" ");
-//							System.out.print(rsStockLevels.getDouble(4));
-//							System.out.println();
-							
 							PosUsed = CalcQuan+rsStockLevels.getDouble(3);
 							Units = rsStockLevels.getDouble(4)-PosUsed;
-//							System.out.println("PosUsed: "+PosUsed+" Units: "+Units);
-//							System.out.println("=====O=====");
 							UpdateStock = con.prepareStatement(SqlUpdateStock);
 							UpdateStock.setDouble(1, Units);
 							UpdateStock.setDouble(2, PosUsed);
