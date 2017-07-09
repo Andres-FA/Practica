@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import capaModelo.Especialidad;
 import capaModelo.Producto;
 import capaModelo.SaborLiquido;
+import capaModelo.Tienda;
 import capaModelo.DetallePedido;
 import capaModelo.TipoLiquido;
 import capaModelo.Pedido;
@@ -446,12 +447,15 @@ public class PedidoDAO {
 			logger.error(e.toString());
 			return(false);
 		}
+		//Debemos obtener el idTienda del Pedido que vamos a finalizar
+		Tienda tiendaPedido = PedidoDAO.obtenerTiendaPedido(idpedido);
+		
 		//Llamado Inserci�n Pixel
 		ArrayList <DetallePedidoPixel> EnvioPixel = PedidoDAO.InsertarPedidoPixel(idpedido);
 		
 		//Main.main(args, EnvioPixel);
 		Main principal = new Main();
-		principal.main( EnvioPixel);
+		principal.main(EnvioPixel, tiendaPedido.getDsnTienda());
 		return(true);
 	}
 	
@@ -1142,4 +1146,30 @@ public class PedidoDAO {
 		}
 		return(consultaDetallePedidos);
 	}
+	
+	public static Tienda obtenerTiendaPedido(int idpedido)
+	{
+		Logger logger = Logger.getLogger("log_file");
+		ConexionBaseDatos con = new ConexionBaseDatos();
+		Connection con1 = con.obtenerConexionBDPrincipal();
+		Tienda tienda = new Tienda();
+		try
+		{
+			Statement stm = con1.createStatement();
+			String consulta = "select p.idtienda from pedido p where idpedido = " + idpedido;
+			logger.info(consulta);
+			ResultSet rs = stm.executeQuery(consulta);
+			int idTienda;
+			while(rs.next()){
+				idTienda = rs.getInt("idproducto");
+				tienda = TiendaDAO.retornarTienda(idTienda);
+			}
+		}catch (Exception e){
+			logger.error(e.toString());
+			
+		}
+		return(tienda);
+		
+	}
+	
 }

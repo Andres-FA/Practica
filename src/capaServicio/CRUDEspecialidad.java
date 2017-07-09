@@ -33,7 +33,8 @@ public class CRUDEspecialidad extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			//Operación idoperacion 1 insertar 2 editar 3 Eliminar  4 Consultar
-			Logger logger = Logger.getLogger("log_file");
+		response.addHeader("Access-Control-Allow-Origin", "*");	
+		Logger logger = Logger.getLogger("log_file");
 			HttpSession sesion = request.getSession();
 			response.addHeader("Access-Control-Allow-Origin", "*");
 			String idoperacion = request.getParameter("idoperacion");

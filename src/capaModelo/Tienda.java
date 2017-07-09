@@ -30,6 +30,11 @@ public class Tienda {
 		this.dsnTienda = dsnTienda;
 	}
 	
+	public Tienda()
+	{
+		
+	}
+	
 	
 
 }

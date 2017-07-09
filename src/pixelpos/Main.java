@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.text.*;
 import pixelpos.DetallePedidoPixel;
+import conexion.ConexionBaseDatos;
 
 public class Main {
 	
@@ -563,15 +564,25 @@ public class Main {
 		return CentralZone;
 	}
 	
-	public void main(ArrayList<capaModelo.DetallePedidoPixel> pruebaPedido) {
+	public void main(ArrayList<capaModelo.DetallePedidoPixel> pruebaPedido, String dsnODBC) {
 				
 		 try
 		 {
+			 //ESTO LO HEMOS UTILIZADO PARA LAS PRUEBAS UNITARIOS
+			 
 			 //Class.forName("sybase.jdbc.sqlanywhere.IDriver");
 			 //Connection con = DriverManager.getConnection("jdbc:sqlanywhere:dsn=PixelPC;uid=admin;pwd=xxx");//local
-			 DriverManager.registerDriver( (Driver)
-					 Class.forName( "sybase.jdbc.sqlanywhere.IDriver" ).newInstance() );
-			 Connection con = DriverManager.getConnection("jdbc:sqlanywhere:dsn=PixelSqlbase;uid=admin;pwd=xxx");//SystemPos
+			 
+			 // ESTO LO ESTABAMOS USANDO EN LAS PRUEBAS INTEGRALES
+			 //DriverManager.registerDriver( (Driver)
+			 //		 Class.forName( "sybase.jdbc.sqlanywhere.IDriver" ).newInstance() );
+			 //Connection con = DriverManager.getConnection("jdbc:sqlanywhere:dsn=PixelSqlbase;uid=admin;pwd=xxx");//SystemPos
+			 
+			 
+			 // ESTA ES LA FORMA PARÁMETRICA
+			 ConexionBaseDatos conexion = new ConexionBaseDatos();
+			 Connection con = conexion.obtenerConexionBDTienda(dsnODBC);
+			 
 			 //Obteniendo el dia de apertura
 			 Statement state = con.createStatement();
 			 String consulta = "select DBA.PixOpenDate() as Opendate";

@@ -31,6 +31,7 @@ public class InsertarEspecialidad extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		HttpSession sesion = request.getSession();
 		String nombre = request.getParameter("nombre");
         String abreviatura = request.getParameter("abreviatura");

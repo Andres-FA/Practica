@@ -32,6 +32,7 @@ public class FinalizarPedido extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		HttpSession sesion = request.getSession();
 		int idpedido = Integer.parseInt(request.getParameter("idpedido"));
 		int idformapago;

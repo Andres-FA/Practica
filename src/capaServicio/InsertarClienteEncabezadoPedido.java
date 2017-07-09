@@ -33,6 +33,7 @@ public class InsertarClienteEncabezadoPedido extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		HttpSession sesion = request.getSession();
 		String telefono = request.getParameter("telefono");
         String nombres = request.getParameter("nombres");

@@ -32,6 +32,7 @@ public class InsertarEncabezadoPedido extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		HttpSession sesion = request.getSession();
 		String tienda = request.getParameter("tienda");
         int idcliente = Integer.parseInt(request.getParameter("idcliente"));

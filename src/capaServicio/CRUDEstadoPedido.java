@@ -32,6 +32,7 @@ public class CRUDEstadoPedido extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Operación idoperacion 1 insertar 2 editar 3 Eliminar  4 Consultar
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		HttpSession sesion = request.getSession();
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		String idoperacion = request.getParameter("idoperacion");

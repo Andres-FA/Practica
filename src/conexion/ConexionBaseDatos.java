@@ -26,7 +26,7 @@ public class ConexionBaseDatos {
 
 		    con = DriverManager.getConnection(
 		            "jdbc:mysql://localhost/pizzaamericana?"
-		            + "user=root&password=naillive");
+		            + "user=root&password=4m32017");
 
 		    // Otros y operaciones sobre la base de datos...
 
@@ -39,27 +39,23 @@ public class ConexionBaseDatos {
 		return(con);
 	}
 	
-	public void obtenerConexionBDTienda(String dsn){
+	public Connection obtenerConexionBDTienda(String dsn){
+		
+		Connection con = null;
 		try {
 
-			//Class.forName("sybase.jdbc.sqlanywhere.IDriver");
-			 Connection con = DriverManager.getConnection("jdbc:sqlanywhere:dsn="+dsn+";uid=admin;pwd=xxx");
-			 //String dburl = "jdbc:sqlanywhere:uid=admin;pwd=xxx;eng=devdb;database=Pixel";
-			 //jdbc:sqlanywhere:uid=DBA;pwd=sql;eng=demo
-			 //Connection con = DriverManager.getConnection(dburl);
-			 Statement statement = con.createStatement();
-			 ResultSet rs = statement.executeQuery("select count(*) from dba.employee");
-			 if (rs.next()) {
-				 int numeroEmpleados = rs.getInt(0); // get first column returned
-				 System.out.println("NumeroTotalEmpleados : " + numeroEmpleados );
-			 }
+			DriverManager.registerDriver( (Driver)
+					 Class.forName( "sybase.jdbc.sqlanywhere.IDriver" ).newInstance() );
+			con = DriverManager.getConnection("jdbc:sqlanywhere:dsn="+dsn+";uid=admin;pwd=xxx");//SystemPos
+						 
 
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 
 		    // Mantener el control sobre el tipo de error
 		    System.out.println("SQLException: " + ex.getMessage());
 
 		}
+		return(con); 
 	}
 	
 }

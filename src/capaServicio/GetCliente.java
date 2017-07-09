@@ -32,6 +32,7 @@ public class GetCliente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		try{
 			HttpSession sesion = request.getSession();
 			String tel = request.getParameter("telefono");

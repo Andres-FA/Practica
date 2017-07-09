@@ -33,6 +33,7 @@ public class ValidarUsuarioAplicacion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+				response.addHeader("Access-Control-Allow-Origin", "*");
 				Logger logger = Logger.getLogger("log_file");
 				HttpSession miSesion = (HttpSession) request.getSession();
 				Usuario usuario = (Usuario) miSesion.getAttribute("usuario");

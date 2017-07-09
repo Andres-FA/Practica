@@ -31,6 +31,7 @@ public class ObtenerTotalPedido extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		int idpedido = Integer.parseInt(request.getParameter("idpedido"));
 		PedidoCtrl PedidoCtrl = new PedidoCtrl();
         String respuesta = PedidoCtrl.obtenerTotalPedido(idpedido);
