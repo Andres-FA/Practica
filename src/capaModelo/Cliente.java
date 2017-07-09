@@ -6,6 +6,8 @@ public class Cliente {
 	private int idcliente;
 	private String telefono;
 	private String nombres;
+	private String apellidos;
+	private String nombreCompania;
 	private String Direccion;
 	private String Municipio;
 	private int idMunicipio;
@@ -90,8 +92,25 @@ public class Cliente {
 	}
 
 	
-	
-	
+	public Cliente(int idcliente, String telefono, String nombres, String apellidos, String nombreCompania,
+			String direccion, String municipio, int idMunicipio, float latitud, float lontitud, String zonaDireccion,
+			String observacion, String tienda, int idtienda) {
+		super();
+		this.idcliente = idcliente;
+		this.telefono = telefono;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.nombreCompania = nombreCompania;
+		Direccion = direccion;
+		Municipio = municipio;
+		this.idMunicipio = idMunicipio;
+		this.latitud = latitud;
+		this.lontitud = lontitud;
+		this.zonaDireccion = zonaDireccion;
+		this.observacion = observacion;
+		this.tienda = tienda;
+		this.idtienda = idtienda;
+	}
 
 	public int getIdMunicipio() {
 		return idMunicipio;
@@ -235,8 +254,23 @@ public class Cliente {
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
 	}
+	
+	
+	public String getApellidos() {
+		return apellidos;
+	}
 
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
 
+	public String getNombreCompania() {
+		return nombreCompania;
+	}
+
+	public void setNombreCompania(String nombreCompania) {
+		this.nombreCompania = nombreCompania;
+	}
 
 	public Cliente() {
 		// TODO Auto-generated constructor stub

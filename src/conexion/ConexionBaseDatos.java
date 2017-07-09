@@ -24,9 +24,13 @@ public class ConexionBaseDatos {
 
 		try {
 
-		    con = DriverManager.getConnection(
+			con = DriverManager.getConnection(
 		            "jdbc:mysql://localhost/pizzaamericana?"
-		            + "user=root&password=4m32017");
+		            + "user=root&password=naillive");
+			
+			//con = DriverManager.getConnection(
+		    //        "jdbc:mysql://localhost/pizzaamericana?"
+		    //        + "user=root&password=4m32017");
 
 		    // Otros y operaciones sobre la base de datos...
 

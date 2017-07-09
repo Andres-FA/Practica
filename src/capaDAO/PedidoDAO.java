@@ -9,6 +9,7 @@ import capaModelo.Especialidad;
 import capaModelo.Producto;
 import capaModelo.SaborLiquido;
 import capaModelo.Tienda;
+import capaModelo.Cliente;
 import capaModelo.DetallePedido;
 import capaModelo.TipoLiquido;
 import capaModelo.Pedido;
@@ -455,7 +456,13 @@ public class PedidoDAO {
 		
 		//Main.main(args, EnvioPixel);
 		Main principal = new Main();
-		principal.main(EnvioPixel, tiendaPedido.getDsnTienda());
+		Cliente cliente = new Cliente ();
+		boolean indicadorAct = true;
+		int memcode = 1;
+		//Si memcode = 0 es porque hay que crear el cliente
+		//Si memcode <> 0 y indicador igual a true hay que actualizar
+		//Si memcode <> 0 y indicador igual a false hay que actualizar
+		principal.main(EnvioPixel, tiendaPedido.getDsnTienda(),memcode,cliente, indicadorAct);
 		return(true);
 	}
 	

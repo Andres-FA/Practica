@@ -3,6 +3,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import capaModelo.Cliente;
+
 import java.text.*;
 import pixelpos.DetallePedidoPixel;
 import conexion.ConexionBaseDatos;
@@ -564,7 +567,7 @@ public class Main {
 		return CentralZone;
 	}
 	
-	public void main(ArrayList<capaModelo.DetallePedidoPixel> pruebaPedido, String dsnODBC) {
+	public void main(ArrayList<capaModelo.DetallePedidoPixel> pruebaPedido, String dsnODBC, int memcode, Cliente cliente, boolean indicadorAct) {
 				
 		 try
 		 {
