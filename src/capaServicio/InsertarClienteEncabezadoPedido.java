@@ -37,13 +37,18 @@ public class InsertarClienteEncabezadoPedido extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		String telefono = request.getParameter("telefono");
         String nombres = request.getParameter("nombres");
+        String apellidos = request.getParameter("apellidos");
+        String nombreCompania = request.getParameter("nombreCompania");
         String direccion = request.getParameter("direccion");
         String zona = request.getParameter("zona");
         String observacion = request.getParameter("observacion");
         String tienda = request.getParameter("tienda");
         String municipio = request.getParameter("municipio");
+        System.out.println(tienda+municipio);
         float latitud;
         float longitud;
+        int idCliente;
+        int memcode;
         try{
         	latitud = Float.parseFloat(request.getParameter("latitud"));
         }catch(Exception e)
@@ -56,10 +61,24 @@ public class InsertarClienteEncabezadoPedido extends HttpServlet {
         {
         	longitud = 0;
         }
+        try{
+        	memcode = Integer.parseInt(request.getParameter("memcode"));
+        }catch(Exception e)
+        {
+        	memcode = 0;
+        }
+        try{
+        	idCliente = Integer.parseInt(request.getParameter("idcliente"));
+        }catch(Exception e)
+        {
+        	idCliente = 0;
+        }
         ClienteCtrl ClienCtrl = new ClienteCtrl();
-        int idcliente = ClienCtrl.InsertarClientePedidoEncabezado(telefono, nombres, direccion, municipio, latitud, longitud, zona, observacion, tienda);
+        int idcliente = ClienCtrl.InsertarClientePedidoEncabezado(idCliente,telefono, nombres, apellidos, nombreCompania,  direccion, municipio, latitud, longitud, zona, observacion, tienda, memcode);
+        String respuesta = "";
         PedidoCtrl PedidoCtrl = new PedidoCtrl();
-        String respuesta = PedidoCtrl.InsertarEncabezadoPedido(tienda,idcliente);
+	    respuesta = PedidoCtrl.InsertarEncabezadoPedido(tienda,idcliente);
+        
         PrintWriter out = response.getWriter();
 		out.write(respuesta);
 	}

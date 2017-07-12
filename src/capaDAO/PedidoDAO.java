@@ -418,7 +418,7 @@ public class PedidoDAO {
 		return(valorTotal);
 	}
 	
-	public static boolean finalizarPedido(int idpedido, int idformapago, double valorformapago, double valortotal)
+	public static boolean finalizarPedido(int idpedido, int idformapago, double valorformapago, double valortotal, int idcliente, int insertado)
 	{
 		Logger logger = Logger.getLogger("log_file");
 		ConexionBaseDatos con = new ConexionBaseDatos();
@@ -456,13 +456,17 @@ public class PedidoDAO {
 		
 		//Main.main(args, EnvioPixel);
 		Main principal = new Main();
-		Cliente cliente = new Cliente ();
-		boolean indicadorAct = true;
-		int memcode = 1;
+		Cliente cliente = ClienteDAO.obtenerClienteporID(idcliente);
+		boolean indicadorAct = false;
+		if(insertado == 0)
+		{
+			indicadorAct = true;
+		}
+		
 		//Si memcode = 0 es porque hay que crear el cliente
 		//Si memcode <> 0 y indicador igual a true hay que actualizar
 		//Si memcode <> 0 y indicador igual a false hay que actualizar
-		principal.main(EnvioPixel, tiendaPedido.getDsnTienda(),memcode,cliente, indicadorAct);
+		//principal.main(EnvioPixel, tiendaPedido.getDsnTienda(),cliente.getMemcode(),cliente, indicadorAct);
 		return(true);
 	}
 	

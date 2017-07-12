@@ -7,6 +7,8 @@ var dtpedido;
 var productos;
 var excepciones;
 var idPedido = 0;
+var memcode = 0;
+var insertado = 0;
 var idCliente = 0;
 var idEstadoPedido = 0;
 var longitud = 0;
@@ -21,6 +23,7 @@ var radioEsp1Ant= 0;
 var radioEsp1 = 0;
 var radioEsp2Ant= 0;
 var radioEsp2 = 0;
+
 
 
 $(document).ready(function() {
@@ -69,10 +72,13 @@ $(document).ready(function() {
             { "mData": "idCliente" },
             { "mData": "tienda" },
             { "mData": "nombre" },
+            { "mData": "apellido" },
+            { "mData": "nombrecompania" },
             { "mData": "direccion" },
             { "mData": "zona" },
             { "mData": "observacion" },
-            { "mData": "telefono" }
+            { "mData": "telefono" },
+            { "mData": "memcode"  , "visible": false }
         ]
     	} );
 
@@ -102,11 +108,15 @@ $(document).ready(function() {
         datos = table.row( this ).data();
         //alert( 'Diste clic en  '+datos.nombre+'\'s row' );
         $('#nombres').val(datos.nombre);
+        $('#apellidos').val(datos.apellido);
+        $('#nombreCompania').val(datos.nombrecompania);
         $('#direccion').val(datos.direccion);
         $('#zona').val(datos.zona);
         $('#observacionDir').val(datos.observacion);
         $("#selectTiendas").val(datos.tienda);
         $("#selectMunicipio").val(datos.municipio);
+        memcode = datos.memcode;
+        idCliente = datos.idCliente;
         var municipio = datos.municipio;
         var dirbuscar = datos.direccion + " " + municipio.toLowerCase();
         buscarMapa(dirbuscar);
@@ -975,13 +985,15 @@ function ConfirmarPedido()
 							var idformapago =  $("#selectformapago").val();
 							var valorformapago =  $("#valorpago").val();
 							$.ajax({ 
-		    				url: server + 'FinalizarPedido?idpedido=' + idPedido + "&idformapago=" + idformapago + "&valortotal=" + totalpedido + "&valorformapago=" + valorformapago , 
+		    				url: server + 'FinalizarPedido?idpedido=' + idPedido + "&idformapago=" + idformapago + "&valortotal=" + totalpedido + "&valorformapago=" + valorformapago + "&idcliente=" + idCliente + "&insertado=" + insertado , 
 		    				dataType: 'json', 
 		    				async: false, 
 		    				success: function(data){ 
 									resultado = data[0];
 									var strClr = "";
 									idPedido = 0;
+									memcode = 0;
+									idCliente = 0;
 								    $('#otrosproductos').html(strClr);
 								    $('#especialidades').html(strClr);
 								    $('#pintarAdiciones').html(strClr);
@@ -1000,6 +1012,8 @@ function ConfirmarPedido()
 									$("#estadopedido").val('');
 									$('#telefono').val('');
 									$('#nombres').val('');
+									$('#apellidos').val('');
+									$('#nombreCompania').val('');
 							        $('#direccion').val('');
 							        $('#zona').val('');
 							        $('#observacionDir').val('');
@@ -1129,12 +1143,15 @@ function agregarProducto()
 	var modespecialidad2= "";
 	var arregloAdiciones = [];
 	var arregloModificadores = [];
+	var tempTienda;
+	var tempMunicipio;
 	if (valida != 1)
 	{
 		return;
 	}
-		var tempTienda =  $("#selectTiendas option:selected").val();
-		var tempMunicipio = $("#selectMunicipio option:selected").val();
+	tempTienda =  $("#selectTiendas option:selected").val();
+	tempMunicipio = $("#selectMunicipio option:selected").val();
+	console.log(tempTienda + tempMunicipio);
 	if (idPedido == 0)
 	{
 		var respuesta;
@@ -1159,21 +1176,40 @@ function agregarProducto()
 		idCliente = respuesta.idcliente;
 		console.log("id pedido " + idPedido + " id cliente " + idCliente);
 		});*/
-
+		var idClienteTemporal;
+		var direccionEncode = encodeURIComponent(direccion.value);
 		$.ajax({ 
-    				url: server + 'InsertarClienteEncabezadoPedido?telefono=' + telefono.value + "&nombres=" + nombres.value +  "&direccion=" + direccion.value + "&tienda=" +  tempTienda +  "&zona=" + zona.value + "&observacion=" + observacionDir.value + "&municipio=" + tempMunicipio + "&longitud=" + longitud + "&latitud=" + latitud, 
+    				url: server + 'InsertarClienteEncabezadoPedido?telefono=' + telefono.value + "&nombres=" + nombres.value + "&apellidos=" + apellidos.value + "&nombreCompania=" + nombreCompania.value +  "&direccion="  + direccionEncode  + "&tienda=" + tempTienda +  "&zona=" + zona.value + "&observacion=" + observacionDir.value + "&municipio=" + tempMunicipio + "&longitud=" + longitud + "&latitud=" + latitud + "&memcode=" + memcode + "&idcliente=" + idCliente, 
     				dataType: 'json', 
     				async: false, 
     				success: function(data){ 
 						respuesta = data[0];
-						idCliente = respuesta.idcliente;
-						idPedido = respuesta.idpedido;
-						idEstadoPedido = respuesta.idestadopedido;
-						$("#estadopedido").val(respuesta.descripcionestadopedido);
+						idClienteTemporal = respuesta.idcliente;
+						if (idCliente != 0)
+						{
+							idPedido = respuesta.idpedido;
+							idEstadoPedido = respuesta.idestadopedido;
+							$("#estadopedido").val(respuesta.descripcionestadopedido);
+						}
+						//else
+						//{
+						//	alert("Se tiene inconvenientes con el cliente existe en sistema Call Center pero no existe en sistema de Tienda");
+						//	return;
+						//}
+						
 											} 
 		});
 		$("#NumPedido").val(idPedido);
-		$("#IdCliente").val(idCliente);
+		$("#IdCliente").val(idClienteTemporal);
+		if ((idCliente > 0 ) && (idCliente == idClienteTemporal))
+		{
+			insertado = 0;
+		}
+		if ((idCliente == 0 ) && (idClienteTemporal  > 0))
+		{
+			insertado = 1;
+			idCliente = idClienteTemporal;
+		}
 		
 	}
 	var tamanoPizza;
@@ -1744,12 +1780,12 @@ function initMap() {
 
 
 // Evento para cuando se da  CLICK EN EL BOTÓN BUSCAR
-function buscarMapa() {
+function buscarMapaDigitado() {
 
     // Obtenemos la dirección y la asignamos a una variable
     var direccion = $('#direccion').val();
     var municipio = $("#selectMunicipio").val();
-    municipio = municipio.loLowerCase();
+    municipio = municipio.toLowerCase();
     direccion = direccion + " " + municipio;
     var resultado;
     
@@ -1981,4 +2017,18 @@ function modificadorDetallePedido (idDetallePedidoPadre,idProductoEspecialidad1,
 	this.idProductoEspecialidad1 = idProductoEspecialidad1;
 	this.idProductoEspecialidad2 = idProductoEspecialidad2;
 	this.cantidad = cantidad;
+}
+
+function limpiarSeleccionCliente()
+{
+		$('#telefono').val("");
+		$('#nombres').val("");
+        $('#apellidos').val("");
+        $('#nombreCompania').val("");
+        $('#direccion').val("");
+        $('#zona').val("");
+        $('#observacionDir').val("");
+        $("#selectTiendas").val("");
+        $("#selectMunicipio").val("");
+        memcode = 0;
 }

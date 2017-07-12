@@ -19,22 +19,39 @@ public class ClienteDAO {
 		try
 		{
 			Statement stm = con1.createStatement();
-			String consulta = "select a.idcliente, b.nombre nombreTienda, a.idtienda, a.nombre, a.direccion, a.zona, a.observacion, a.telefono, c.nombre nombremunicipio, a.latitud, a.longitud from cliente a,tienda b, municipio c where a.idtienda = b.idtienda and a.idmunicipio = c.idmunicipio and a.telefono = '" + tel +"'";
+			String consulta = "select a.idcliente, b.nombre nombreTienda, a.idtienda, a.nombre, a.apellido, a.nombrecompania, a.direccion, a.zona, a.observacion, a.telefono, c.nombre nombremunicipio, a.latitud, a.longitud, a.memcode from cliente a,tienda b, municipio c where a.idtienda = b.idtienda and a.idmunicipio = c.idmunicipio and a.telefono = '" + tel +"'";
 			logger.info(consulta);
 			ResultSet rs = stm.executeQuery(consulta);
+			int idcliente;
+			String nombreTienda;
+			String nombreCliente;
+			String apellido;
+			String nombreCompania;
+			String direccion;
+			String zona;
+			String observacion;
+			String telefono;
+			String municipio;
+			float latitud;
+			float longitud;
+			int idTienda;
+			int memcode;
 			while(rs.next()){
-				int idcliente = rs.getInt("idcliente");
-				String nombreTienda = rs.getString("nombreTienda");
-				String nombreCliente = rs.getString("nombre");
-				String direccion = rs.getString("direccion");
-				String zona = rs.getString("zona");
-				String observacion = rs.getString("observacion");
-				String telefono = rs.getString("telefono");
-				String municipio = rs.getString("nombremunicipio");
-				float latitud = rs.getFloat("latitud");
-				float longitud = rs.getFloat("longitud");
-				int idTienda = rs.getInt("idtienda");
-				Cliente clien = new Cliente( idcliente, telefono, nombreCliente, direccion,municipio,latitud, longitud, zona, observacion, nombreTienda, idTienda);
+				idcliente = rs.getInt("idcliente");
+				nombreTienda = rs.getString("nombreTienda");
+				nombreCliente = rs.getString("nombre");
+				apellido = rs.getString("apellido");
+				nombreCompania = rs.getString("nombrecompania");
+				direccion = rs.getString("direccion");
+				zona = rs.getString("zona");
+				observacion = rs.getString("observacion");
+				telefono = rs.getString("telefono");
+				municipio = rs.getString("nombremunicipio");
+				latitud = rs.getFloat("latitud");
+				longitud = rs.getFloat("longitud");
+				idTienda = rs.getInt("idtienda");
+				memcode = rs.getInt("memcode");
+				Cliente clien = new Cliente( idcliente, telefono, nombreCliente,apellido, nombreCompania, direccion,municipio,latitud, longitud, zona, observacion, nombreTienda, idTienda, memcode);
 				clientes.add(clien);
 			}
 		}catch (Exception e){
@@ -53,7 +70,7 @@ public class ClienteDAO {
 		try
 		{
 			Statement stm = con1.createStatement();
-			String insert = "insert into cliente (idtienda,nombre, direccion, zona, telefono, observacion, municipio, latitud, longitud) values (" + clienteInsertar.getIdtienda() + ", '" +clienteInsertar.getNombres() + "' , '" + clienteInsertar.getDireccion() + "' , '" + clienteInsertar.getZonaDireccion() +"' , '" + clienteInsertar.getTelefono() + "' , '" + clienteInsertar.getObservacion() + " , " + clienteInsertar.getIdMunicipio() + " , " + clienteInsertar.getLatitud() + " , " + clienteInsertar.getLontitud() + "')"; 
+			String insert = "insert into cliente (idtienda,nombre, apellido, nombrecompania, direccion, zona, telefono, observacion, idmunicipio, latitud, longitud) values (" + clienteInsertar.getIdtienda() + ", '" +clienteInsertar.getNombres() + "' , '" + clienteInsertar.getApellidos() + "' , '" + clienteInsertar.getNombreCompania() + "' , '" + clienteInsertar.getDireccion() + "' , '" + clienteInsertar.getZonaDireccion() +"' , '" + clienteInsertar.getTelefono() + "' , '" + clienteInsertar.getObservacion() + "' , " + clienteInsertar.getIdMunicipio() + " , " + clienteInsertar.getLatitud() + " , " + clienteInsertar.getLontitud() + ")"; 
 			logger.info(insert);
 			stm.executeUpdate(insert);
 			ResultSet rs = stm.getGeneratedKeys();
@@ -81,22 +98,39 @@ public class ClienteDAO {
 		try
 		{
 			Statement stm = con1.createStatement();
-			String consulta = "select a.idcliente, b.nombre nombreTienda, a.idtienda, a.nombre, a.direccion, a.zona, a.observacion, a.telefono, c.nombre nombremunicipio, a.latitud, a.longitud from cliente a,tienda b, municipio c where a.idtienda = b.idtienda and a.idmunicipio = c.idmunicipio and a.idcliente = " + id +"";
+			String consulta = "select a.idcliente, b.nombre nombreTienda, a.idtienda, a.nombre, a.apellido, a.nombrecompania, a.direccion, a.zona, a.observacion, a.telefono, c.nombre nombremunicipio, a.latitud, a.longitud, a.memcode from cliente a,tienda b, municipio c where a.idtienda = b.idtienda and a.idmunicipio = c.idmunicipio and a.idcliente = " + id +"";
 			logger.info(consulta);
 			ResultSet rs = stm.executeQuery(consulta);
+			int idcliente;
+			String nombreTienda;
+			String nombreCliente;
+			String apellido;
+			String nombreCompania;
+			String direccion;
+			String zona;
+			String observacion;
+			String telefono;
+			String municipio;
+			float latitud;
+			float longitud;
+			int idTienda;
+			int memcode;
 			while(rs.next()){
-				int idcliente = rs.getInt("idcliente");
-				String nombreTienda = rs.getString("nombreTienda");
-				String nombreCliente = rs.getString("nombre");
-				String direccion = rs.getString("direccion");
-				String zona = rs.getString("zona");
-				String observacion = rs.getString("observacion");
-				String telefono = rs.getString("telefono");
-				String municipio = rs.getString("nombremunicipio");
-				float latitud = rs.getFloat("latitud");
-				float longitud = rs.getFloat("longitud");
-				int idTienda = rs.getInt("idtienda");
-				clienteConsultado = new Cliente( idcliente, telefono, nombreCliente, direccion,municipio,latitud, longitud, zona, observacion, nombreTienda, idTienda);
+				idcliente = rs.getInt("idcliente");
+				nombreTienda = rs.getString("nombreTienda");
+				nombreCliente = rs.getString("nombre");
+				apellido = rs.getString("apellido");
+				nombreCompania = rs.getString("nombrecompania");
+				direccion = rs.getString("direccion");
+				zona = rs.getString("zona");
+				observacion = rs.getString("observacion");
+				telefono = rs.getString("telefono");
+				municipio = rs.getString("nombremunicipio");
+				latitud = rs.getFloat("latitud");
+				longitud = rs.getFloat("longitud");
+				idTienda = rs.getInt("idtienda");
+				memcode = rs.getInt("memcode");
+				clienteConsultado = new Cliente( idcliente, telefono, nombreCliente, apellido, nombreCompania, direccion,municipio,latitud, longitud, zona, observacion, nombreTienda, idTienda,memcode);
 				
 			}
 		}catch (Exception e){
@@ -114,15 +148,17 @@ public class ClienteDAO {
 		Connection con1 = con.obtenerConexionBDPrincipal();
 		try
 		{
+			//Para actualizar el cliente el idcliente debe ser diferente de vacío.
 			Statement stm = con1.createStatement();
-			String update = "update cliente set nombre = '" + clienteAct.getNombres() + "' , direccion = '" + clienteAct.getDireccion() + "' , idmunicipio = " + clienteAct.getIdMunicipio() + " , latitud = " + clienteAct.getLatitud() + " , longitud = " + clienteAct.getLontitud() + " , zona = '" + clienteAct.getZonaDireccion() + "' , observacion = '" + clienteAct.getObservacion() +"'  where telefono = '" + clienteAct.getTelefono() + "'  and idtienda = '" + clienteAct.getIdtienda() + "'"; 
-			logger.info(update);
-			stm.executeUpdate(update);
-			String idClienteUpdate = "select idcliente from cliente where telefono = '" + clienteAct.getTelefono() + "'  and idtienda = '" + clienteAct.getIdtienda() + "'";
-			ResultSet rs = stm.executeQuery(idClienteUpdate);
-			while(rs.next()){
-				idClienteActualizado = rs.getInt("idcliente");
-				break;
+			if(clienteAct.getIdcliente() > 0)
+			{
+				String update = "update cliente set nombre = '" + clienteAct.getNombres() + "' , direccion = '" + clienteAct.getDireccion() + "' , idmunicipio = " + clienteAct.getIdMunicipio() + " , latitud = " + clienteAct.getLatitud() + " , longitud = " + clienteAct.getLontitud() + " , zona = '" + clienteAct.getZonaDireccion() + "' , observacion = '" + clienteAct.getObservacion() +"', apellido = '" + clienteAct.getApellidos() + "' , nombrecompania = '" + clienteAct.getNombreCompania() + "'  where idcliente = " + clienteAct.getIdcliente(); 
+				logger.info(update);
+				stm.executeUpdate(update);
+				idClienteActualizado = clienteAct.getIdcliente();
+			}else
+			{
+				logger.info("No se pudo hacer actualización dado que el idCliente venia en ceros o vacío");
 			}
 			stm.close();
 			con1.close();

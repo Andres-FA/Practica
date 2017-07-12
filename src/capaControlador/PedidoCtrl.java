@@ -59,7 +59,11 @@ public class PedidoCtrl {
 	public String InsertarEncabezadoPedido(String tienda,int idcliente){
 		int idtienda = TiendaDAO.obteneridTienda(tienda);
 		JSONArray listJSON = new JSONArray();
-		int resultado = PedidoDAO.InsertarEncabezadoPedido(idtienda, idcliente);
+		int resultado = 0;
+		if (idcliente != 0)
+		{
+			resultado = PedidoDAO.InsertarEncabezadoPedido(idtienda, idcliente);
+		}
 		JSONObject Respuesta = new JSONObject();
 		Respuesta.put("idpedido", resultado);
 		Respuesta.put("idcliente", idcliente);
@@ -186,9 +190,9 @@ public class PedidoCtrl {
 		return listJSON.toJSONString();
 	}
 	
-	public String FinalizarPedido(int idpedido, int idformapago, double valorformapago, double valortotal)
+	public String FinalizarPedido(int idpedido, int idformapago, double valorformapago, double valortotal, int idcliente, int insertado)
 	{
-		boolean resultado = PedidoDAO.finalizarPedido(idpedido, idformapago, valorformapago, valortotal);
+		boolean resultado = PedidoDAO.finalizarPedido(idpedido, idformapago, valorformapago, valortotal, idcliente, insertado);
 		JSONArray listJSON = new JSONArray();
 		JSONObject Respuesta = new JSONObject();
 		Respuesta.put("insertado", resultado);

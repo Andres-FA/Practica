@@ -17,6 +17,7 @@ public class Cliente {
 	private String observacion;
 	private String tienda;
 	private int idtienda;
+	private int memcode;
 	
 	
 	
@@ -58,12 +59,14 @@ public class Cliente {
 	
 	
 
-	public Cliente(int idcliente, String telefono, String nombres, String direccion, String Municipio, float latitud,
-			float lontitud, String zonaDireccion, String observacion, String tienda, int idtienda) {
+	public Cliente(int idcliente, String telefono, String nombres, String apellidos, String nombreCompania, String direccion, String Municipio, float latitud,
+			float lontitud, String zonaDireccion, String observacion, String tienda, int idtienda, int memcode) {
 		super();
 		this.idcliente = idcliente;
 		this.telefono = telefono;
 		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.nombreCompania = nombreCompania;
 		Direccion = direccion;
 		this.Municipio = Municipio;
 		this.latitud = latitud;
@@ -72,29 +75,13 @@ public class Cliente {
 		this.observacion = observacion;
 		this.tienda = tienda;
 		this.idtienda = idtienda;
-	}
-
-	public Cliente( String telefono, String nombres, String direccion, String Municipio, int idmunicipio, float latitud,
-			float lontitud, String zonaDireccion, String observacion, String tienda, int idtienda) {
-		super();
-		
-		this.telefono = telefono;
-		this.nombres = nombres;
-		Direccion = direccion;
-		this.Municipio = Municipio;
-		this.idMunicipio = idmunicipio;
-		this.latitud = latitud;
-		this.lontitud = lontitud;
-		this.zonaDireccion = zonaDireccion;
-		this.observacion = observacion;
-		this.tienda = tienda;
-		this.idtienda = idtienda;
+		this.memcode = memcode;
 	}
 
 	
 	public Cliente(int idcliente, String telefono, String nombres, String apellidos, String nombreCompania,
 			String direccion, String municipio, int idMunicipio, float latitud, float lontitud, String zonaDireccion,
-			String observacion, String tienda, int idtienda) {
+			String observacion, String tienda, int idtienda, int memcode) {
 		super();
 		this.idcliente = idcliente;
 		this.telefono = telefono;
@@ -110,6 +97,17 @@ public class Cliente {
 		this.observacion = observacion;
 		this.tienda = tienda;
 		this.idtienda = idtienda;
+		this.memcode = memcode;
+	}
+
+	
+	
+	public int getMemcode() {
+		return memcode;
+	}
+
+	public void setMemcode(int memcode) {
+		this.memcode = memcode;
 	}
 
 	public int getIdMunicipio() {
@@ -187,6 +185,10 @@ public class Cliente {
 
 
 	public String getTienda() {
+		if (this.tienda == null)
+		{
+			return("");
+		}
 		return tienda;
 	}
 
@@ -234,6 +236,10 @@ public class Cliente {
 
 
 	public String getZonaDireccion() {
+		if (this.zonaDireccion == null)
+		{
+			return("");
+		}
 		return zonaDireccion;
 	}
 
@@ -246,6 +252,10 @@ public class Cliente {
 
 
 	public String getObservacion() {
+		if (this.observacion == null)
+		{
+			return("");
+		}
 		return observacion;
 	}
 
@@ -257,6 +267,10 @@ public class Cliente {
 	
 	
 	public String getApellidos() {
+		if (this.apellidos == null)
+		{
+			return("");
+		}
 		return apellidos;
 	}
 
@@ -265,6 +279,10 @@ public class Cliente {
 	}
 
 	public String getNombreCompania() {
+		if (this.nombreCompania == null)
+		{
+			return("");
+		}
 		return nombreCompania;
 	}
 

@@ -36,6 +36,8 @@ public class FinalizarPedido extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		int idpedido = Integer.parseInt(request.getParameter("idpedido"));
 		int idformapago;
+		int idcliente;
+		int insertado;
 		double valorformapago;
 		double valortotal;
 		try
@@ -57,8 +59,20 @@ public class FinalizarPedido extends HttpServlet {
 		{
 			valortotal = 0;
 		}
+		try{
+			idcliente = Integer.parseInt(request.getParameter("idcliente"));
+		}catch(Exception e)
+		{
+			idcliente = 0;
+		}
+		try{
+			insertado = Integer.parseInt(request.getParameter("insertado"));
+		}catch(Exception e)
+		{
+			insertado = 0;
+		}
 		PedidoCtrl PedidoCtrl = new PedidoCtrl();
-        String respuesta = PedidoCtrl.FinalizarPedido(idpedido, idformapago, valorformapago, valortotal);
+        String respuesta = PedidoCtrl.FinalizarPedido(idpedido, idformapago, valorformapago, valortotal, idcliente, insertado);
         System.out.println(respuesta);
         PrintWriter out = response.getWriter();
 		out.write(respuesta);
