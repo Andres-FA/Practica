@@ -567,7 +567,7 @@ public class Main {
 		return CentralZone;
 	}
 	
-	public void main(ArrayList<capaModelo.DetallePedidoPixel> pruebaPedido, String dsnODBC, int memcode, Cliente cliente, boolean indicadorAct) {
+	public void main(ArrayList<capaModelo.DetallePedidoPixel> pruebaPedido, String dsnODBC, int MemCode, Cliente MiembroEnviado, boolean indicadorAct) {
 				
 		 try
 		 {
@@ -582,7 +582,7 @@ public class Main {
 			 //Connection con = DriverManager.getConnection("jdbc:sqlanywhere:dsn=PixelSqlbase;uid=admin;pwd=xxx");//SystemPos
 			 
 			 
-			 // ESTA ES LA FORMA PARÁMETRICA
+			 // ESTA ES LA FORMA PARï¿½METRICA
 			 ConexionBaseDatos conexion = new ConexionBaseDatos();
 			 Connection con = conexion.obtenerConexionBDTienda(dsnODBC);
 			 
@@ -595,6 +595,15 @@ public class Main {
 			 rs.close();
 			 System.out.println("DÃ­a De Apertura: "+DiaApertura);
 			 
+			 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			 Date parsedDate = dateFormat.parse("1899-12-30 00:00:00.000");
+			 Timestamp Inicialts = new java.sql.Timestamp(parsedDate.getTime());
+			 System.out.println("Fecha Inicial Sistema: "+Inicialts);
+			 
+			 Timestamp ts = new Timestamp(System.currentTimeMillis());
+			 System.out.println("Timestamp: "+ts);
+
+			 
 			 //Obteniendo el numero de factura
 			 CallableStatement proc = con.prepareCall("{call DBA.GetNextAutoInc(?,?)}");
 			 proc.registerOutParameter(1, Types.INTEGER);
@@ -604,8 +613,71 @@ public class Main {
 			 proc.close();
 			 System.out.println("NumFactura: "+NumFactura);
 			 
-			 //MemCode: Codigo del miembro o cliente
-			 int MemCode = 8160;
+				//MemCode: Codigo del miembro o cliente
+//				Cliente(int idcliente, String telefono, String nombres, String apellidos, String nombreCompania,
+//						String direccion, String municipio, int idMunicipio, float latitud, float lontitud, String zonaDireccion,
+//						String observacion, String tienda, int idtienda) 
+				
+				PreparedStatement Member = null;
+				String SqlInsertMember = "INSERT INTO DBA.Member(MEMCODE,FIRSTNAME,LASTNAME,ADRESS1,ADRESS2,CITY,PROV,STARTDATE,"
+						+"EXPDATE,ANNIVER,HOMETELE,LASTVISIT,MEMDIS,CARDNUM,GROUPNUM,ISACTIVE,Country,"
+						+"UpdateStatus,Directions,CompanyName,Type,HasBioReg,NoSolicit)"
+						+"VALUES (?,?,?,?,?,?,'Antioquia',?,?,?,?,?,0,?,0,1,'',1,?,?,0,0,0)";
+				String SqlUpdateMember = "UPDATE DBA.Member SET FIRSTNAME=?,LASTNAME=?,ADRESS1=?,ADRESS2=?,CITY=?,"
+						+ "Directions=?,CompanyName=? WHERE MEMCODE=?";
+				
+				
+				
+				//Si existe Memcode>0 y Bool = False **no hacer nada
+				//Si existe Memcode>0 y Bool = True **Actualizar
+				//No existe Memcode = 0 y ignora Bool **Crea
+				
+				if (MemCode == 0) {
+					parsedDate = dateFormat.parse("2040-12-31 00:00:00.000");
+					Timestamp LastDayTS = new java.sql.Timestamp(parsedDate.getTime());
+									
+					proc = con.prepareCall("{call DBA.GetNextAutoInc(?,?)}");
+					proc.registerOutParameter(1, Types.INTEGER);
+					proc.setString(2, "GETNEXT_MEMBER");
+					proc.execute();
+					MemCode = proc.getInt(1);
+					proc.close();
+					
+					Member = con.prepareStatement(SqlInsertMember);
+					Member.setInt(1, MemCode);
+					Member.setString(2, MiembroEnviado.getNombres());
+					Member.setString(3, MiembroEnviado.getApellidos());
+					Member.setString(4, MiembroEnviado.getDireccion());
+					Member.setString(5, MiembroEnviado.getZonaDireccion());//revisar
+					Member.setString(6, MiembroEnviado.getMunicipio());
+					Member.setTimestamp(7, ts);
+					Member.setTimestamp(8, LastDayTS);
+					Member.setTimestamp(9, ts);
+					Member.setString(10, MiembroEnviado.getTelefono());
+					Member.setTimestamp(11, ts);
+					Member.setString(12, Integer.toString(MemCode));
+					Member.setString(13, MiembroEnviado.getObservacion());
+					Member.setString(14, MiembroEnviado.getNombreCompania());
+					
+					Member.execute();
+					Member.close();
+					
+				}else if (indicadorAct == true) {
+					Member = con.prepareStatement(SqlUpdateMember);
+					Member.setString(1, MiembroEnviado.getNombres());
+					Member.setString(2, MiembroEnviado.getApellidos());
+					Member.setString(3, MiembroEnviado.getDireccion());
+					Member.setString(4, MiembroEnviado.getZonaDireccion());//revisar
+					Member.setString(5, MiembroEnviado.getMunicipio());
+					Member.setString(6, MiembroEnviado.getObservacion());
+					Member.setString(7, MiembroEnviado.getNombreCompania());
+					Member.setInt(8, MemCode);
+					
+					Member.execute();
+					Member.close();
+				}
+			 
+			 
 			 
 			 //MethodNum: Efectivo o Tarjeta
 			 int MethodNum = 1001;
@@ -613,14 +685,7 @@ public class Main {
 			 //Cambio
 			 double Change = 100000;
 			 
-			 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			 Date parsedDate = dateFormat.parse("1899-12-30 00:00:00.000");
-			 Timestamp Inicialts = new java.sql.Timestamp(parsedDate.getTime());
-			 System.out.println("Fecha Inicial Sistema: "+Inicialts);
 			 
-			 Timestamp ts = new Timestamp(System.currentTimeMillis());
-			 System.out.println("Timestamp: "+ts);
-
 			 
 			 //Llenado de ArrayList Pedido de prueba
 			 /*
