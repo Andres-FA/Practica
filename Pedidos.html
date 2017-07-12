@@ -35,6 +35,14 @@
 										<td id="encNombres"><input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres"></td>
 								</tr>
 								<tr>
+										<td class="active">Apellidos</td>
+										<td id="encApellidos"><input type="text" id="apellidos" name="apellidos" class="form-control" placeholder="Apellidos"></td>
+								</tr>
+								<tr>
+										<td class="active">Nombre Compañia</td>
+										<td id="encNombreCompania"><input type="text" id="nombreCompania" name="nombreCompania" class="form-control" placeholder="Nombre Compañia"></td>
+								</tr>
+								<tr>
 										<td class="active">Dirección</td>
 										<td id="encDireccion">
 										
@@ -45,7 +53,7 @@
 												<select id="selectMunicipio" class="form-control"></select>
 											</div>
 											<div class="col-md-2">
-												<input type="button" class="btn btn-default btn-sm" id="buscar" value="Buscar" onclick="buscarMapa()"/>
+												<input type="button" class="btn btn-default btn-sm" id="buscar" value="Buscar" onclick="buscarMapaDigitado()"/>
 											</div>
 										
 										</td>
@@ -63,25 +71,32 @@
 										<td><select id="selectTiendas" class="form-control"></select></td>
 								</tr>
 							
-									<table id="grid-clientes" class="table table-condensed table-hover table-striped" cellspacing="0" width="100%">
+
+
+							
+						</tbody>
+					</table>
+
+					<input type="button" class="btn btn-default btn-sm" id="buscar" value="Limpiar Selección Cliente" onclick="limpiarSeleccionCliente()"/>
+
+					<table id="grid-clientes" class="table table-condensed table-hover table-striped" cellspacing="0" width="100%">
 									        <thead>
 									            <tr>
 									                <th data-column-id="idCliente">idCliente</th>
 									                <th data-column-id="tienda">Tienda</th>
-									                <th data-column-id="nombre">Nombre</th>
+									                <th data-column-id="nombre">Nombres</th>
+									                <th data-column-id="apellido">Apellidos</th>
+									                <th data-column-id="nombrecompania">Nom-Compañia</th>
 									                <th data-column-id="direccion">Dirección</th>
 									                <th data-column-id="zona">Zona</th>
 									                <th data-column-id="observacion">Observacion</th>
 									                <th data-column-id="telefono">Telefono</th>
+									                <th data-column-id="memcode">Memcode</th>
 									            </tr>
 									        </thead>
 									      	<tbody>
 									      			
 									      	</tbody>
-									</table>
-
-							
-						</tbody>
 					</table>
 				
 			</form>
