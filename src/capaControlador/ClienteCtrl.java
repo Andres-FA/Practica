@@ -63,7 +63,7 @@ public String obtenerClienteporID(int id)
 public String InsertarClientePedido(String telefono, String nombres, String direccion,  String zona,  String observacion, String tienda)
 {
 	//Validar si el cliente ya existe en la base de datos
-	//Llamamos el método ya existente para saber si el cliente con el teléfono ya existe
+	//Llamamos el mï¿½todo ya existente para saber si el cliente con el telï¿½fono ya existe
 	// Esta pendiente convertir el nombre tienda a tienda
 	String retorno = "false";
 	int idTienda = TiendaDAO.obteneridTienda(tienda);
@@ -120,7 +120,7 @@ public String InsertarClientePedido(String telefono, String nombres, String dire
 public int InsertarClientePedidoEncabezado(int idCliente,String telefono, String nombres, String apellidos, String nombreCompania, String direccion, String municipio, float latitud, float longitud, String zona,  String observacion, String tienda, int memcode)
 {
 	//Validar si el cliente ya existe en la base de datos
-	//Llamamos el método ya existente para saber si el cliente con el teléfono ya existe
+	//Llamamos el mï¿½todo ya existente para saber si el cliente con el telï¿½fono ya existe
 	// Esta pendiente convertir el nombre tienda a tienda
 	int idTienda = TiendaDAO.obteneridTienda(tienda);
 	System.out.println("idtienda " + idTienda);

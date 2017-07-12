@@ -148,7 +148,7 @@ public class ClienteDAO {
 		Connection con1 = con.obtenerConexionBDPrincipal();
 		try
 		{
-			//Para actualizar el cliente el idcliente debe ser diferente de vacío.
+			//Para actualizar el cliente el idcliente debe ser diferente de vacï¿½o.
 			Statement stm = con1.createStatement();
 			if(clienteAct.getIdcliente() > 0)
 			{
@@ -158,7 +158,7 @@ public class ClienteDAO {
 				idClienteActualizado = clienteAct.getIdcliente();
 			}else
 			{
-				logger.info("No se pudo hacer actualización dado que el idCliente venia en ceros o vacío");
+				logger.info("No se pudo hacer actualizaciï¿½n dado que el idCliente venia en ceros o vacï¿½o");
 			}
 			stm.close();
 			con1.close();
