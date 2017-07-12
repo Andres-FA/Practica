@@ -1151,7 +1151,7 @@ function agregarProducto()
 	}
 	tempTienda =  $("#selectTiendas option:selected").val();
 	tempMunicipio = $("#selectMunicipio option:selected").val();
-	console.log(tempTienda + tempMunicipio);
+	
 	if (idPedido == 0)
 	{
 		var respuesta;
@@ -1185,7 +1185,8 @@ function agregarProducto()
     				success: function(data){ 
 						respuesta = data[0];
 						idClienteTemporal = respuesta.idcliente;
-						if (idCliente != 0)
+						console.log(respuesta);
+						if (idClienteTemporal != 0)
 						{
 							idPedido = respuesta.idpedido;
 							idEstadoPedido = respuesta.idestadopedido;

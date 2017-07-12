@@ -466,7 +466,7 @@ public class PedidoDAO {
 		//Si memcode = 0 es porque hay que crear el cliente
 		//Si memcode <> 0 y indicador igual a true hay que actualizar
 		//Si memcode <> 0 y indicador igual a false hay que actualizar
-		//principal.main(EnvioPixel, tiendaPedido.getDsnTienda(),cliente.getMemcode(),cliente, indicadorAct);
+		principal.main(EnvioPixel, tiendaPedido.getDsnTienda(),cliente.getMemcode(),cliente, indicadorAct);
 		return(true);
 	}
 	
@@ -1172,7 +1172,7 @@ public class PedidoDAO {
 			ResultSet rs = stm.executeQuery(consulta);
 			int idTienda;
 			while(rs.next()){
-				idTienda = rs.getInt("idproducto");
+				idTienda = rs.getInt("idtienda");
 				tienda = TiendaDAO.retornarTienda(idTienda);
 			}
 		}catch (Exception e){
