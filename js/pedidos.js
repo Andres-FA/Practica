@@ -1974,6 +1974,7 @@ function adicionDetallePedido (idDetallePedidoPadre,idDetallePedidoAdicion, idEs
 	this.cantidad2 = cantidad2;
 }
 
+
 function modificadorDetallePedido (idDetallePedidoPadre,idProductoEspecialidad1, idProductoEspecialidad2, cantidad)
 {
 	
