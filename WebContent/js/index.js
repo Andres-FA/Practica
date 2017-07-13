@@ -1,9 +1,15 @@
 /** index.js **/
 
-var server = 'http://localhost:8080/ProyectoPizzaAmericana/';
+var server;
 
 $(function () 
 {
+
+	//Obtenemos el valor de la variable server
+	var loc = window.location;
+	var pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
+	server = loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
+		
 	$('#txtPassword').keypress(function (event) {
             if (event.which == 13) {
                 autenticar();
@@ -17,16 +23,17 @@ function autenticar()
 {
 	var usuario =  $('#txtUsuario').val();
 	var password =  $('#txtPassword').val();
-	console.log("hola");
+	// 'GetIngresarAplicacion?txtUsuario=' + usuario + "&txtPassword=" + password
 	$.ajax({ 
-	    				url: server + 'GetIngresarAplicacion?txtUsuario=' + usuario + "&txtPassword=" + password, 
+	    				url: server + 'GetIngresarAplicacion', 
 	    				dataType: 'text',
 	    				type: 'post', 
+	    				data: {'txtUsuario' : usuario , 'txtPassword' : password }, 
 	    				async: false, 
 	    				success: function(data){ 
 	    						if(data == 'OK')
 	    						{
-	    							location.href ="http://localhost:8080/ProyectoPizzaAmericana/Pedidos.html";
+	    							location.href = server + "Pedidos.html";
 	    						}
 	    						else
 	    						{

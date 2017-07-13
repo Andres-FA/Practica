@@ -58,5 +58,6 @@ public class GetIngresarAplicacion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+		System.out.println("hola");
 	}
 }

@@ -1,6 +1,6 @@
 	
 
-var server = 'http://localhost:8080/ProyectoPizzaAmericana/';
+var server;
 var tiendas;
 var table;
 var tabledetalle;
@@ -16,6 +16,12 @@ var latitud = 0;
 
 
 $(document).ready(function() {
+
+	//Obtenemos el valor de la variable server
+	var loc = window.location;
+	var pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
+	server = loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
+	
 
 	//Lo primero que realizaremos es validar si está logueado
 	$.ajax({ 
